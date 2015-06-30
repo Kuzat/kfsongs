@@ -1,0 +1,21 @@
+{
+  "name": "meanboiler",
+  "version": "1.0.0",
+  "description": "A simple boiler plate for a mean stack",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "boilerplate",
+    "mean",
+    "node"
+  ],
+  "author": "Vegard Bjørsvik",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.13.1",
+    "express": "^4.13.0",
+    "morgan": "^1.6.0"
+  }
+}
