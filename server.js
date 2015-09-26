@@ -29,10 +29,17 @@ app.use(morgan('dev'));
 // set static files location
 app.use(express.static(__dirname + '/public'));
 
-
 // ROUTES FOR OUR API
 // ============================
 // ADD API ROUTES HERE
+var apiRoutes = require("./app/routes/api")(app, express);
+app.use('/api', apiRoutes);
+
+// ROUTE TO SERVE SONG FILE
+app.get('/s/:songid', function(req, res) {
+	res.sendFile(path.join(__dirname + '/public/s/' + req.params.songid + '/song.mp3'));
+});
+
 
 // MAIN CATCHALL ROUTE ------------
 // SEND USERS TO FRONTEND ---------
