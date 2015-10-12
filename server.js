@@ -50,4 +50,4 @@ app.get('*', function(req, res) {
 // START SERVER
 // ================================
 app.listen(config.port);
-console.log("Server is listending on {ip}");
+console.log("Server is listending on https://127.0.0.1:8080");

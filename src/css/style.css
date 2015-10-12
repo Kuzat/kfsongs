@@ -1,0 +1,28 @@
+body
+{
+	background-color: coral;
+}
+
+#upload-button
+{
+	background: rgba(0, 0, 0, 0.25);
+	border: 0;
+	margin: auto;
+	display: block;
+	text-align: center;
+	width: 200px;
+	height: 80px;
+	font-size: 4vw;
+	margin-top: 25%;
+	cursor: pointer;
+}
+
+#upload-button:focus
+{
+	outline: 0 !important;
+}
+
+#upload-button:active
+{
+	background: rgba(0,0,0,0.40);
+}
