@@ -3,12 +3,11 @@ var path   = require('path');
 var fs     = require('fs');
 var shortid = require('shortid');
 
-songid = shortid.generate(); // Generate short unique id to separete the songs
-
 // Creating a storage object for multer 
 var storage = multer.diskStorage({
 	// Creates a new directory and set it as destination
 	destination: function(req, file, cb) {
+		songid = shortid.generate(); // Generate short unique id to separete the songs
 		fs.mkdir('public/s/'+songid, function() {
 			cb(null, 'public/s/'+songid);
 		});
