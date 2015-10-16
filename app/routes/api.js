@@ -2,6 +2,7 @@ var multer = require('multer');
 var path   = require('path');
 var fs     = require('fs');
 var shortid = require('shortid');
+var childProcess = require('child_process');
 
 // Creating a storage object for multer 
 var storage = multer.diskStorage({
@@ -27,7 +28,9 @@ function fileFilter(req, file, cb) {
 	}
 }
 
-var upload = multer({ storage: storage , fileFilter: fileFilter});
+var limits = { fileSize: 1024*1024*15}
+
+var upload = multer({ storage: storage , fileFilter: fileFilter, limits: limits});
 
 module.exports = function(app, express) {
 	var apiRoutes = express.Router();
