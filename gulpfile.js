@@ -5,6 +5,14 @@ var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var uglifycss = require('gulp-uglifycss');
 var livereload = require('gulp-livereload');
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+
+gulp.task('lint', function() {
+	return gulp.src('src/js/*.js')
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish));
+});
 
 gulp.task('js', function() {
 
@@ -40,4 +48,5 @@ gulp.task('watch', function() {
 	gulp.watch('src/css/*.css', ['css']);
 });
 
+gulp.task('build', ['js', 'css', 'lint'], function() {});
 gulp.task('default', ['js', 'css', 'watch'], function() {});
