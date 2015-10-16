@@ -1,6 +1,6 @@
 {
   "name": "kfMusic",
-  "version": "0.0.0",
+  "version": "0.5.0",
   "description": "A simple webserivce to host music files for kofradia",
   "main": "server.js",
   "keywords": [
