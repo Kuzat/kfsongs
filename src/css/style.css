@@ -50,6 +50,44 @@ body
     -webkit-animation: rollin 1s linear;
 }
 
+.success-box
+{
+	background-color: rgba(17, 193, 17, 0.36);
+    color: #206306;
+    margin: auto;
+    margin-top: 2%;
+    display: block;
+    text-align: center;
+    width: 400px;
+    height: 30px;
+    font-size: 150%;
+    overflow: hidden;
+    -webkit-animation: rollin 1s linear;
+}
+
+.link-box 
+{
+	background-color: rgba(165, 78, 27, 0.81);
+	color: rgba(8, 5, 0, 0.67);
+	box-shadow: inset 0 0 10px #612E06;
+	vertical-align: middle;
+    line-height: 50px;
+	margin: auto;
+	margin-top: 2%;
+	text-align: center;
+	overflow: hidden;
+	display: block;
+	width: 400px;
+	height: 50px;
+	font-size: 120%;
+	border: none;
+	cursor: text;
+	-webkit-user-select: initial;
+	-moz-user-select: initial;
+	-ms-user-select: initial;
+	user-select: initial;
+}
+
 @-webkit-keyframes thumb {
 	0% { -webkit-transform: scale(1); }
 	50% { -webkit-transform: scale(0.9); }

@@ -9,7 +9,7 @@ function uploadFile(file, callback) {
 					response = JSON.parse(xhr.response);
 					callback(false, response);
 				} else if (xhr.status == 500) {
-					callback(true, {"error": "File to large. Needs to be less than 15MB"})
+					callback(true, {"error": "File to large. Needs to be less than 15MB"});
 				} else {
 					response = JSON.parse(xhr.response);
 					callback(true, response);
