@@ -6,9 +6,13 @@ function uploadFile(file, callback) {
 			if (xhr.readyState == 4) {
 				progress.parentElement.removeChild(progress);
 				if (xhr.status == 200) {
-					callback(false, xhr.response);
+					response = JSON.parse(xhr.response);
+					callback(false, response);
+				} else if (xhr.status == 500) {
+					callback(true, {"error": "File to large. Needs to be less than 15MB"})
 				} else {
-					callback(true, xhr.repsonse);
+					response = JSON.parse(xhr.response);
+					callback(true, response);
 				}
 			}
 		};
@@ -31,6 +35,6 @@ function uploadFile(file, callback) {
 		xhr.open('POST', 'http://127.0.0.1:8080/api/upload', true);
 		xhr.send(formdata);
 	} else {
-		callback(true, null);
+		callback(true, {"error": "Wrong file type! Please use mp3"});
 	}
 }
