@@ -1,12 +1,13 @@
 {
-  "name": "kfMusic",
-  "version": "0.5.0",
-  "description": "A simple webserivce to host music files for kofradia",
+  "name": "kfsongs",
+  "version": "0.7.0",
+  "description": "A simple application to host mp3 files",
   "main": "server.js",
   "keywords": [
-    "kofradia",
+    "kf",
     "music",
-    "upload"
+    "upload",
+    "mp3"
   ],
   "scripts": {
     "start": "node server.js"
