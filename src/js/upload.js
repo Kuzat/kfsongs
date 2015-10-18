@@ -5,10 +5,6 @@ function uploadFile(file, callback) {
 	var maxSize = 1024*1024*15
 	if (xhr.upload && file.type == 'audio/mp3') {
 
-		if(file.size <= maxSize) {
-			callback(true, {"error": "File to large. Needs to be less than 15MB"});
-		}
-
 		xhr.onreadystatechange = function(event) {
 			if (xhr.readyState == 4) {
 				progress.parentElement.removeChild(progress);
