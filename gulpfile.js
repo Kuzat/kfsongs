@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var mainBowerFiles = require('main-bower-files');
 var filter = require('gulp-filter');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
@@ -18,7 +17,7 @@ gulp.task('js', function() {
 
 	var jsFiles = ['src/js/*'];
 
-	gulp.src(mainBowerFiles().concat(jsFiles))
+	gulp.src(jsFiles)
 		.pipe(filter('*.js'))
 		.pipe(concat('main.js'))
 		.pipe(uglify())
@@ -32,7 +31,7 @@ gulp.task('css', function() {
 
 	// gulp-order if order of css files mather. Example if using normalize.css
 
-	gulp.src(mainBowerFiles().concat(cssFiles))
+	gulp.src(cssFiles)
 		.pipe(filter('*.css'))
 		.pipe(concat('main.css'))
 		.pipe(uglifycss())
