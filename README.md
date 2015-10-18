@@ -1,5 +1,5 @@
 # kfsongs
 simple node.js mp3 hosting application
-## Instalation
+## Installation
 * npm install
 * gulp build
