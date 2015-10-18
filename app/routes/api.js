@@ -2,22 +2,7 @@ var multer = require('multer');
 var path   = require('path');
 var fs     = require('fs');
 var shortid = require('shortid');
-var childProcess = require('child_process');
-
-// Creating a storage object for multer 
-var storage = multer.diskStorage({
-	// Creates a new directory and set it as destination
-	destination: function(req, file, cb) {
-		songid = shortid.generate(); // Generate short unique id to separete the songs
-		fs.mkdir('public/s/'+songid, function() {
-			cb(null, 'public/s/'+songid);
-		});
-	},
-	// Save all songs with the same name to easier serve them to the user later
-	filename: function(req, file, cb) {
-		cb(null, 'song.mp3');
-	}
-});
+var fileType = require('file-type');
 
 // A simple filter that only accepts files with mp3 mimetype
 function fileFilter(req, file, cb) {
@@ -28,9 +13,10 @@ function fileFilter(req, file, cb) {
 	}
 }
 
-var limits = { fileSize: 1024*1024*15}
+//set file limit to 15MB
+var limits = { fileSize: 1024*1024*15 }
 
-var upload = multer({ storage: storage , fileFilter: fileFilter, limits: limits});
+var upload = multer({ storage: multer.memoryStorage() , fileFilter: fileFilter, limits: limits});
 
 module.exports = function(app, express) {
 	var apiRoutes = express.Router();
@@ -42,17 +28,23 @@ module.exports = function(app, express) {
 
 	//Route to upload. Accepts 1 file through post with name song. Return with a sucess message and link on success
 	apiRoutes.post('/upload', upload.single('song'), function(req, res, next) {
-		if (req.file) {
-			return res.json({ message: "Upload complete!", link: "https://127.0.0.1:8080/s/"+songid});
+		buffer = req.file.buffer;
+		if (fileType(buffer).ext == 'mp3') {
+			var songid = shortid.generate();
+			fs.mkdir('public/s/'+songid, function(err) {
+				if(err) return console.log(err);
+
+				fs.writeFile('public/s/'+songid+'/song.mp3', buffer,function(err) {
+					if(err) return console.log(err);
+
+					req.file = null;
+					buffer = null
+					return res.json({ message: "Upload complete!", link: "http://127.0.0.1:8080/s/"+songid});
+				});
+			});
 		} else {
 			return res.status(415).send({ error: "Wrong file type! Please use mp3"});
 		}
-		next();
-	});
-
-	// Route to upload song from youtube videos. Expects a youtube url
-	apiRoutes.post('/upload/youtube', function(req, res) {
-		res.json({ message: "Hello bois!" });
 	});
 
 	return apiRoutes
