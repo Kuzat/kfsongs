@@ -1,3 +1,5 @@
+var ipadress = "127.0.0.1";
+var port = 8080;
 function uploadFile(file, callback) {
 	var xhr = new XMLHttpRequest();
 	if (xhr.upload && file.type == 'audio/mp3') {
@@ -32,7 +34,7 @@ function uploadFile(file, callback) {
 		var formdata = new FormData();
 		formdata.append('song', file);
 
-		xhr.open('POST', 'http://127.0.0.1:8080/api/upload', true);
+		xhr.open('POST', 'http://'+ipadress+':'+port+'/api/upload', true);
 		xhr.send(formdata);
 	} else {
 		callback(true, {"error": "Wrong file type! Please use mp3"});

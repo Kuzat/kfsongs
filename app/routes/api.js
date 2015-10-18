@@ -3,6 +3,7 @@ var path   = require('path');
 var fs     = require('fs');
 var shortid = require('shortid');
 var fileType = require('file-type');
+var config = require('../../config');
 
 // A simple filter that only accepts files with mp3 mimetype
 function fileFilter(req, file, cb) {
@@ -39,7 +40,7 @@ module.exports = function(app, express) {
 
 					req.file = null;
 					buffer = null
-					return res.json({ message: "Upload complete!", link: "http://127.0.0.1:8080/s/"+songid});
+					return res.json({ message: "Upload complete!", link: "http://"+config.ipadress+":"+config.port+"/s/"+songid});
 				});
 			});
 		} else {

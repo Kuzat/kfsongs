@@ -51,4 +51,4 @@ app.get('*', function(req, res) {
 // ================================
 app.listen(config.port);
 console.log('This process is your pid ' + process.pid);
-console.log("Server is listending on https://127.0.0.1:8080");
+console.log("Server is listending on http://"+config.ipadress+":"+config.port);
