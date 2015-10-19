@@ -7,7 +7,7 @@ var config = require('../../config');
 
 // A simple filter that only accepts files with mp3 mimetype
 function fileFilter(req, file, cb) {
-	if (file.mimetype == 'audio/mp3') {
+	if (file.mimetype == 'audio/mp3' || file.mimetype == 'audio/mpeg') {
 		cb(null, true)
 	} else {
 		cb(null, false);
