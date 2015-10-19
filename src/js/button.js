@@ -13,7 +13,7 @@ function removeElmentByClass(classname) {
 function createBox(classname, message) {
 	box = document.createElement('div');
 	box.className = classname;
-	box.innerText = message;
+	box.innerHTML = message;
 
 	// Instert the box after the upload button
 	uploadButton = document.getElementsByClassName('content')[0];

@@ -82,10 +82,10 @@ body
 	font-size: 120%;
 	border: none;
 	cursor: text;
-	-webkit-user-select: initial;
-	-moz-user-select: initial;
-	-ms-user-select: initial;
-	user-select: initial;
+	-webkit-user-select: all;
+	-moz-user-select: all;
+	-ms-user-select: all;
+	user-select: all;
 }
 
 @-webkit-keyframes thumb {
