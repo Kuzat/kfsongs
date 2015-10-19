@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
 		removeElmentByClass("success-box");
 		removeElmentByClass("link-box");
 
-		uploadFile(event.srcElement.files[0], function(error, response) {
-			event.srcElement.value = '';
+		uploadFile(event.target.files[0], function(error, response) {
+			event.target.value = '';
 
 			if (error) {
 				animation.shake();
