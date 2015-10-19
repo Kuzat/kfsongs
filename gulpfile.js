@@ -6,11 +6,17 @@ var uglifycss = require('gulp-uglifycss');
 var livereload = require('gulp-livereload');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
+var fs = require('fs')
 
 gulp.task('lint', function() {
 	return gulp.src('src/js/*.js')
 		.pipe(jshint())
 		.pipe(jshint.reporter(stylish));
+});
+
+gulp.task('folders', function() {
+	fs.mkdir('public/s', function(err) {
+	});
 });
 
 gulp.task('js', function() {
@@ -47,5 +53,5 @@ gulp.task('watch', function() {
 	gulp.watch('src/css/*.css', ['css']);
 });
 
-gulp.task('build', ['js', 'css', 'lint'], function() {});
+gulp.task('build', ['js', 'css', 'lint', 'folders'], function() {});
 gulp.task('default', ['js', 'css', 'watch'], function() {});
