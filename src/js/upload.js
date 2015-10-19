@@ -2,7 +2,7 @@ var ipadress = "127.0.0.1";
 var port = 8080;
 function uploadFile(file, callback) {
 	var xhr = new XMLHttpRequest();
-	var maxSize = 1024*1024*15
+	var maxSize = 1024*1024*15;
 	if (xhr.upload && file.type == 'audio/mp3') {
 
 		xhr.onreadystatechange = function(event) {
