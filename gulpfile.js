@@ -14,8 +14,10 @@ gulp.task('lint', function() {
 		.pipe(jshint.reporter(stylish));
 });
 
-gulp.task('folders', function() {
-	fs.mkdir('public/s', function(err) {
+gulp.task('setup', function() {
+	fs.mkdir('public/s', function(err) { });
+	fs.mkdir('data/', function(err) { 
+		fs.writeFile('data/data.json', '{}', function(err) { });
 	});
 });
 
@@ -53,5 +55,5 @@ gulp.task('watch', function() {
 	gulp.watch('src/css/*.css', ['css']);
 });
 
-gulp.task('build', ['js', 'css', 'lint', 'folders'], function() {});
+gulp.task('build', ['js', 'css', 'lint', 'setup'], function() {});
 gulp.task('default', ['js', 'css', 'watch'], function() {});
