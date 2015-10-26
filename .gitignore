@@ -4,3 +4,4 @@ public/s*
 public/assets
 *.log
 data/
+log/
