@@ -10,7 +10,8 @@
     "mp3"
   ],
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "merge": "node merge.js"
   },
   "author": "Vegard Bjørsvik",
   "license": "MIT",
