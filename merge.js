@@ -23,15 +23,33 @@ function removeFiles(files) {
 	}
 }
 
+function songExist(songid, value, callback) {
+	var data = require(__dirname+'/data/data.json');
+
+	if (value in data) return callback(true, data[value]);
+
+	data[value] = songid;
+
+	fs.writeFile(__dirname + '/data/data.json', JSON.stringify(data, null, 2), function(err) {
+		if(err) return console.log(err);
+
+		return callback(false, songid);
+	});
+}
+
 var dirs = fs.readdirSync('./public/s/').filter(function(file) {
 	return fs.statSync('./public/s/'+file).isDirectory();
 });
 
 songHashes = {};
 duplicates = []
+addedToData = []
 
 for (i in dirs) {
 	songHash = fileHash(fs.readFileSync('./public/s/'+dirs[i]+'/'+fs.readdirSync('./public/s/'+dirs[i])[0]));
+	songExist(dirs[i], songHash, function(exist, songid) {
+		if(!exist) console.log("Added "+ songid +" to data file");
+	})
 	if (songHash in songHashes) {
 		console.log(dirs[i] + ' is a duplicate');
 		duplicates.push(dirs[i]);
