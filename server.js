@@ -24,6 +24,16 @@ app.use(function( req, res, next) {
     next();
 });
 
+// Function to check if file exits
+function existsSync(filePath){
+  try{
+    fs.statSync(filePath);
+  }catch(err){
+    if(err.code == 'ENOENT') return false;
+  }
+  return true;
+};
+
 var logDirectory = __dirname + '/log'
 
 // ensure log directory exists
@@ -50,7 +60,11 @@ app.use('/api', apiRoutes);
 
 // ROUTE TO SERVE SONG FILE
 app.get('/s/:songid', function(req, res) {
-	res.sendFile(path.join(__dirname + '/public/s/' + req.params.songid + '/song.mp3'));
+	if (existsSync(__dirname + '/public/s/' + req.params.songid + '/song.mp3')) {
+		res.sendFile(path.join(__dirname + '/public/s/' + req.params.songid + '/song.mp3'));
+	} else {
+		res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
+	}
 });
 
 
