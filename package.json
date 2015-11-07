@@ -1,6 +1,7 @@
 {
   "name": "kfsongs",
-  "version": "0.8.0",
+  "version": "0.9.0",
+  "repository": "https://github.com/Kuzat/kfsongs.git",
   "description": "A simple application to host mp3 files",
   "main": "server.js",
   "keywords": [
