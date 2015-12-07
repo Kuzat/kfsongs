@@ -4,6 +4,7 @@ var shortid = require('shortid');
 var fileType = require('file-type');
 var crypto = require('crypto');
 var config = require('../../config');
+var yt2webm = require('../services/yt2webm');
 
 // A simple filter that only accepts files with mp3 mimetype
 function fileFilter(req, file, cb) {
@@ -82,6 +83,28 @@ module.exports = function(app, express) {
 			});
 		} else {
 			return res.status(415).send({ error: "Wrong file type! Please use mp3"});
+		}
+	});
+
+	// Route to upload with Youtube link. 
+	apiRoutes.post('/upload/youtube', function(req, res) {
+		console.log(req.body);
+		if (req.body.url) {
+
+			// Generate unique id for each upload
+			var songid = shortid.generate();
+
+			// Create a new directory with the unique id
+			fs.mkdir('public/s/'+songid, function(err) {
+				yt2webm(req.body.url, songid, function(err, success) {
+					if (err) return console.log(err);
+
+					return res.json({ message: "Upload complete!", link: "http://"+config.ipadress+":"+config.port+"/s/"+songid});
+				});
+			});
+
+		} else {
+			return res.status(400).send({ error: "Please send url as a post param"});
 		}
 	});
 
