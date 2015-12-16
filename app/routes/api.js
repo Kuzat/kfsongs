@@ -4,7 +4,7 @@ var shortid = require('shortid');
 var fileType = require('file-type');
 var crypto = require('crypto');
 var config = require('../../config');
-var yt2webm = require('../services/yt2webm');
+var ytdl = require('../services/ytdl');
 
 // A simple filter that only accepts files with mp3 mimetype
 function fileFilter(req, file, cb) {
@@ -94,15 +94,23 @@ module.exports = function(app, express) {
 			// Generate unique id for each upload
 			var songid = shortid.generate();
 
-			// Create a new directory with the unique id
-			fs.mkdir('public/s/'+songid, function(err) {
-				yt2webm(req.body.url, songid, function(err, success) {
-					if (err) return console.log(err);
+			ytdl.checkVideo(req.body.url, function(err, response) {
+				if (err) return console.log(err);
+				// Check if file exist to stop multiple files from beeing stored
+				songExist(songid, fileHash(req.body.url), function(exist, songid) {
 
-					return res.json({ message: "Upload complete!", link: "http://"+config.ipadress+":"+config.port+"/s/"+songid});
+					if (exist) return res.json({ message: "Upload complete!", link: "http://"+config.ipadress+":"+config.port+"/s/"+songid});
+
+					// Create a new directory with the unique id
+					fs.mkdir('public/s/'+songid, function(err) {
+						ytdl.save(response, songid, function(err, success) {
+							if (err) return console.log(err);
+
+							return res.json({ message: "Upload complete!", link: "http://"+config.ipadress+":"+config.port+"/s/"+songid});
+						});
+					});
 				});
 			});
-
 		} else {
 			return res.status(400).send({ error: "Please send url as a post param"});
 		}

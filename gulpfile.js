@@ -10,6 +10,8 @@ var fs = require('fs')
 
 gulp.task('lint', function() {
 	return gulp.src('src/js/*.js')
+		.pipe(concat('app/routes/api.js'))
+		.pipe(concat('app/services/ytdl.js'))
 		.pipe(jshint())
 		.pipe(jshint.reporter(stylish));
 });

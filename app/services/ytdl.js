@@ -13,7 +13,7 @@ Object.prototype.maxKey = function() {
 
 bitrates = {};
 
-module.exports = function(url, songid, callback) {
+module.exports.checkVideo = function(url, callback) {
 	ytdl.getInfo(url, function(err, info) {
 		if (err) return callback(err);
 		info.formats.forEach(function(element, index, array) {
@@ -28,13 +28,19 @@ module.exports = function(url, songid, callback) {
 			var songSize = response.headers['content-length'];
 			var maxSize = 1024*1024*15;
 			if (songSize < maxSize) {
-				var command = new ffmpeg({source: response})
-				.toFormat('mp3')
-				.on('end', function() {
-					callback(null, true);
-				})
-				.saveToFile('public/s/'+songid+'/song.mp3');	
+				callback(null, response);
+			} else {
+				callback('File size to big. Must be less than ' + maxSize/(1024*1024));
 			}
 		});
 	});
+};
+
+module.exports.save = function(response, songid, callback) {
+	var command = new ffmpeg({source: response})
+		.toFormat('mp3')
+		.on('end', function() {
+			callback(null, true);
+		})
+		.saveToFile('public/s/'+songid+'/song.mp3');	
 };

@@ -1,0 +1,12 @@
+* Need to get the mp3 version or a version as a buffer so I can create a md5 hash and add to data file. 
+
+- Maybe we could just take a md5 hash of the youtube url or something? 
+- That would work for same youtube videos, but what if there was another video with the same audio file or that someone downloaded the youtube video and uploaded it themself.
+- That is a problem yes. But that would only lead to a max of 2 of same song since two youtube video surley dont have exactly the same audio file. With the scope of this project I think this would be the most logic fix.
+
+* The folder are created before we download and check the audio file/youtube video. 
+- Just create the file afterwards.
+- That should fix it.
+
+* We need a web input that can take the url
+- Should be easy.
