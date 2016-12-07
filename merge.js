@@ -13,8 +13,8 @@ function fileHash(fileBuffer) {
 function removeFiles(files) {
 	try {
 		for (i in files) {
-			fs.unlinkSync('./'+files[i]+'/song.mp3');
-			fs.rmdirSync('./'+files[i]);
+			fs.unlinkSync(__dirname+'/public/s/'+files[i]+'/song.mp3');
+			fs.rmdirSync(__dirname+'/public/s/'+files[i]);
 		}
 	} catch (e) {
 		if(e.code == 'ENOENT') {

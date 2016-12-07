@@ -38,6 +38,31 @@ function songExist(songid, value, callback) {
 	});
 }
 
+function stripLink(youtube_url) {
+        var youtube_id = '';
+
+        var n1 = youtube_url.indexOf('&v=');
+        var n2 = youtube_url.indexOf('?v=');
+        var n3 = youtube_url.indexOf('be/');
+        var n4 = youtube_url.indexOf('v/');
+        var n5 = youtube_url.indexOf('ed/');
+
+        if (n5 != -1) {
+        	youtube_id = youtube_url.substring(n5+3,n5+14);
+        } else if (n3 != -1) {
+        	youtube_id = youtube_url.substring(n3+3, n3+14);
+        } else if (n4 != -1) {
+            youtube_id = youtube_url.substring(n4+2, n4+13);
+        } else if (n1 != -1) {
+            youtube_id = youtube_url.substring(n1+3, n1+14);
+        } else {
+        	youtube_id = youtube_url.substring(n2+3, n2+14);
+        }
+
+        return youtube_id;
+}
+
+
 //set file limit to 15MB
 var limits = { fileSize: 1024*1024*15 }
 
@@ -86,7 +111,7 @@ module.exports = function(app, express) {
 		}
 	});
 
-	// Route to upload with Youtube link. 
+	// Route to upload with Youtube link.
 	apiRoutes.post('/upload/youtube', function(req, res) {
 		console.log(req.body);
 		if (req.body.url) {
@@ -96,8 +121,10 @@ module.exports = function(app, express) {
 
 			ytdl.checkVideo(req.body.url, function(err, response) {
 				if (err) return console.log(err);
+				// youtube id used for identification purposes
+				var youtube_id = stripLink(req.body.url)
 				// Check if file exist to stop multiple files from beeing stored
-				songExist(songid, fileHash(req.body.url), function(exist, songid) {
+				songExist(songid, fileHash(youtube_id), function(exist, songid) {
 
 					if (exist) return res.json({ message: "Upload complete!", link: "http://"+config.ipadress+":"+config.port+"/s/"+songid});
 
