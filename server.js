@@ -10,11 +10,14 @@ var config       	  = require("./config");
 var path         	  = require("path");
 var fs 			 	  = require('fs');
 var FileStreamRotator = require('file-stream-rotator');
-
+var development       = process.env.NODE_ENV != 'production';
 // APP CONFIGURATION ------------
 // use body parse so we can grab information from POST requests
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
+
+// Remove "X-Powered-By" header message
+app.disable('x-powered-by');
 
 // configure our app to handle CORS requests
 app.use(function( req, res, next) {
@@ -34,20 +37,10 @@ function existsSync(filePath){
   return true;
 };
 
-var logDirectory = __dirname + '/log'
-
-// ensure log directory exists
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
-
-// create a rotating write stream
-var accessLogStream = FileStreamRotator.getStream({
-  filename: logDirectory + '/access-%DATE%.log',
-  frequency: 'daily',
-  verbose: false
-});
-
-//log all request to log file
-app.use(morgan('combined', {stream: accessLogStream}));
+//dev log
+if (development) {
+    app.use(morgan('dev'));
+}
 
 // set static files location
 app.use(express.static(__dirname + '/public'));
@@ -77,5 +70,7 @@ app.get('*', function(req, res) {
 // START SERVER
 // ================================
 app.listen(config.port);
-console.log('This process is your pid ' + process.pid);
-console.log("Server is listending on http://"+config.ipadress+":"+config.port);
+if (development) {
+    console.log('This process is your pid ' + process.pid);
+    console.log("Server is listending on http://"+config.ipadress+":"+config.port);
+}
