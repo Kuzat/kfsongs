@@ -61,7 +61,7 @@ module.exports = function(app, express) {
 			// Check if file exist to stop multiple files from beeing stored
 			songExist(songid, fileHash(buffer), function(exist, songid) {
 
-				if (exist) return res.json({ message: "Upload complete!", link: "http://"+config.ipadress+":"+config.port+"/s/"+songid});
+				if (exist) return res.json({ message: "Upload complete!", link: "https://"+config.ipadress+":"+config.port+"/s/"+songid});
 
 				// Create a new directory with the unique id
 				fs.mkdir('public/s/'+songid, function(err) {
@@ -75,7 +75,7 @@ module.exports = function(app, express) {
 						req.file = null;
 						buffer = null;
 
-						return res.json({ message: "Upload complete!", link: "http://"+config.ipadress+":"+config.port+"/s/"+songid});
+						return res.json({ message: "Upload complete!", link: "https://"+config.ipadress+":"+config.port+"/s/"+songid});
 					});
 				});
 
