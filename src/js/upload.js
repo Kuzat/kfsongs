@@ -36,7 +36,7 @@ function uploadFile(file, callback) {
 		formdata.append('song', file);
 
 
-		xhr.open('POST', 'http://'+ipadress+':'+port+'/api/upload', true);
+		xhr.open('POST', 'https://'+ipadress+':'+port+'/api/upload', true);
 		xhr.send(formdata);
 	} else {
 		callback(true, {"error": "Wrong file type! Please use mp3"});
