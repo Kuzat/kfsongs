@@ -10,6 +10,14 @@ var config       	  = require("./config");
 var path         	  = require("path");
 var fs 			 	  = require('fs');
 var FileStreamRotator = require('file-stream-rotator');
+var https             = require('https');
+
+const httpsOptions = {
+    key: fs.readFileSync('./key.pem'),
+    cert: fs.readFileSync('./cert.pem'),
+    requestCert: false,
+    rejectUnauthorized: false
+};
 
 // APP CONFIGURATION ------------
 // use body parse so we can grab information from POST requests
@@ -76,6 +84,8 @@ app.get('*', function(req, res) {
 
 // START SERVER
 // ================================
-app.listen(config.port);
-console.log('This process is your pid ' + process.pid);
-console.log("Server is listending on http://"+config.ipadress+":"+config.port);
+// app.listen(config.port);
+const server = https.createServer(httpsOptions, app).listen(config.port, () => {
+    console.log('This process is your pid ' + process.pid);
+    console.log("Server is listending on http://"+config.ipadress+":"+config.port);
+})

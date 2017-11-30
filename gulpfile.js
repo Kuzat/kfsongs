@@ -6,7 +6,9 @@ var uglifycss = require('gulp-uglifycss');
 var livereload = require('gulp-livereload');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
-var fs = require('fs')
+var fs = require('fs');
+var replace = require('gulp-replace');
+var config = require('./config.js');
 
 gulp.task('lint', function() {
 	return gulp.src('src/js/*.js')
@@ -16,7 +18,7 @@ gulp.task('lint', function() {
 
 gulp.task('setup', function() {
 	fs.mkdir('public/s', function(err) { });
-	fs.mkdir('data/', function(err) { 
+	fs.mkdir('data/', function(err) {
 		fs.writeFile('data/data.json', '{}', function(err) { });
 	});
 });
@@ -27,6 +29,8 @@ gulp.task('js', function() {
 
 	gulp.src(jsFiles)
 		.pipe(filter('*.js'))
+		.pipe(replace('SERVER_IP', config.ipadress))
+		.pipe(replace('SERVER_PORT', config.port))
 		.pipe(concat('main.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('public/assets/js'))

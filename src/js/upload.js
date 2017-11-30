@@ -1,5 +1,6 @@
-var ipadress = "127.0.0.1";
-var port = 8080;
+var ipadress = "SERVER_IP";
+var port = SERVER_PORT;
+
 function uploadFile(file, callback) {
 	var xhr = new XMLHttpRequest();
 	var maxSize = 1024*1024*15;
@@ -24,7 +25,7 @@ function uploadFile(file, callback) {
 		var progress = document.createElement('progress');
 		progress.max = 100; progress.value = 0;
 		document.getElementsByClassName('content')[0].appendChild(progress);
-		
+
 		xhr.upload.addEventListener('progress', function(e) {
 			var val = parseInt(e.loaded / e.total * 100);
 			progress.value = val;

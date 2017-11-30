@@ -11,7 +11,7 @@
     "mp3"
   ],
   "scripts": {
-    "start": "node server.js",
+    "start": "gulp build && node server.js",
     "merge": "node merge.js"
   },
   "author": "Vegard Bjørsvik",
@@ -21,6 +21,7 @@
     "express": "^4.13.0",
     "file-stream-rotator": "0.0.6",
     "file-type": "^3.1.0",
+    "gulp-replace": "^0.6.1",
     "multer": "^1.0.3",
     "shortid": "^2.2.2"
   },
